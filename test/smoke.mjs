@@ -8,9 +8,11 @@
  * agent sandbox refuses the named pipe it needs.
  */
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { EventEmitter } from 'node:events'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import vm from 'node:vm'
 
 const require = createRequire(import.meta.url)
@@ -184,11 +186,26 @@ check('the Windows shell falls back to the inbox PowerShell', () => {
 })
 
 check('a bare Windows program name is expanded through PATH and PATHEXT', () => {
-  const found = resolveExecutable('nvim', 'win32', {
-    PATH: 'C:\\missing;C:\\Program Files\\Neovim\\bin',
-    PATHEXT: '.COM;.EXE',
-  })
-  assert.equal(found, 'C:\\Program Files\\Neovim\\bin\\nvim.exe')
+  // The resolver consults the filesystem, so the fixture is a real directory with
+  // a real file. Hardcoding a path such as `C:\Program Files\Neovim\bin` passes
+  // only on a machine that happens to have Neovim installed — which is exactly
+  // how this check failed on the Linux CI runner the first time it ran.
+  const root = mkdtempSync(join(tmpdir(), 'dsh-terminal-tab-path-'))
+  try {
+    const bin = join(root, 'Neovim', 'bin')
+    mkdirSync(bin, { recursive: true })
+    writeFileSync(join(bin, 'nvim.exe'), '')
+    const found = resolveExecutable('nvim', 'win32', {
+      // A first, missing directory proves the search continues past a miss.
+      PATH: [join(root, 'missing'), bin].join(';'),
+      PATHEXT: '.COM;.EXE',
+    })
+    assert.equal(found, join(bin, 'nvim.exe'))
+    // A name no directory holds stays as written.
+    assert.equal(resolveExecutable('definitely-absent-xyz', 'win32', { PATH: root, PATHEXT: '.EXE' }), 'definitely-absent-xyz')
+  } finally {
+    rmSync(root, { recursive: true, force: true })
+  }
   // A path is taken as written, and non-Windows platforms pass the name through.
   assert.equal(resolveExecutable('C:\\tools\\nvim.exe', 'win32', {}), 'C:\\tools\\nvim.exe')
   assert.equal(resolveExecutable('nvim', 'linux', {}), 'nvim')
