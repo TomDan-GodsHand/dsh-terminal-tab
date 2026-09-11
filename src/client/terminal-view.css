@@ -1,0 +1,62 @@
+/*
+ * Terminal tab layout: the terminal owns the whole view.
+ *
+ * No toolbar and no padding — the screen fills the tab edge to edge, and the
+ * only chrome left is a message bubble that floats over it when something needs
+ * saying. Tokens are the ones the surrounding GUI actually declares
+ * (`--dsw-alias-label-*`, `--dsw-alias-bg-layer-*`, `--dsw-alias-border-*`), so
+ * the bubble follows the active theme. The screen itself is painted by xterm
+ * from the settings palette, not from here.
+ */
+
+/*
+ * The resident composer goes away while this view is mounted, so the terminal
+ * owns the height too.
+ *
+ * Only the selected conversation view renders, so the presence of this root IS
+ * "the 终端 tab is the active one"; the composer comes back the moment another
+ * tab is chosen. Both hooks are the shell's own: `data-composer-seat` wraps the
+ * composer slot, and `data-width-handle` marks the two full-height drag strips
+ * that flank it — hiding the seat alone leaves those strips straddling the
+ * terminal, because their position is computed from the chat column width the
+ * composer no longer has.
+ */
+body:has(.dshTerminalTabRoot) [data-composer-seat],
+body:has(.dshTerminalTabRoot) [data-width-handle] {
+  display: none;
+}
+
+.dshTerminalTabRoot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 320px;
+}
+
+.dshTerminalTabScreen {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/*
+ * A connection notice or failure, laid over the terminal: without a toolbar it
+ * has no row of its own, and giving it one would resize the terminal every time
+ * a reconnect starts and ends.
+ */
+.dshTerminalTabNotice {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 24px);
+  padding: 6px 12px;
+  border: 0.5px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  background: var(--dsw-alias-bg-layer-2);
+  color: var(--dsw-alias-label-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+  pointer-events: none;
+}

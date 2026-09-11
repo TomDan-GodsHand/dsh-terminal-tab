@@ -1,0 +1,15 @@
+# Normalize text to LF in the repository so a Windows checkout and a Linux CI
+# run produce the same diff, and keep the few binaries binary.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.tgz binary
+
+# Git's own bookkeeping files stay as written.
+.gitattributes text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf

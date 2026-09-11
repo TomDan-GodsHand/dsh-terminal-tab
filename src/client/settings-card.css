@@ -1,0 +1,287 @@
+/*
+ * The settings card, matching the plugin settings page's own cards.
+ *
+ * Geometry, tokens, and type scale mirror PluginCard's compiled stylesheet in
+ * @deepseek-ai/dsh-client-ui-settings-plugins, so this row is indistinguishable
+ * from its neighbours: the same 16px radius, the same 0.5px border, the same
+ * 15px/600 name over a 13px tertiary description, and the same chevron turn.
+ */
+
+.dshTerminalCard {
+  border: 0.5px solid var(--dsw-alias-border-l4);
+  background: var(--dsw-alias-bg-layer-3);
+  border-radius: 16px;
+  list-style: none;
+  transition: border-color 0.16s, background 0.16s;
+}
+
+.dshTerminalCard:hover {
+  border-color: var(--dsw-alias-label-dimmed);
+}
+
+.dshTerminalCardOpen {
+  background: var(--dsw-alias-bg-layer-2);
+  border-color: var(--dsw-alias-label-dimmed);
+}
+
+.dshTerminalCardHeader {
+  appearance: none;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
+  border-radius: 12px;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  display: flex;
+}
+
+.dshTerminalCardHeader:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: -2px;
+}
+
+.dshTerminalCardHeadText {
+  flex-direction: column;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+  display: flex;
+}
+
+.dshTerminalCardName {
+  color: var(--dsw-alias-label-primary);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.dshTerminalCardDescription {
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.dshTerminalCardChevron {
+  color: var(--dsw-alias-label-tertiary);
+  flex: none;
+  transition: transform 0.16s;
+}
+
+.dshTerminalCardChevronOpen {
+  transform: rotate(180deg);
+}
+
+.dshTerminalCardBody {
+  border-top: 0.5px solid var(--dsw-alias-border-l2);
+  margin: 0 16px;
+  padding-bottom: 8px;
+}
+
+/* Form rows inside the body. */
+
+.dshTerminalRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  font-size: 13px;
+}
+
+.dshTerminalRow > label {
+  flex: 0 0 96px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.dshTerminalInput {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 8px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 6px;
+  background: var(--dsw-alias-bg-layer-3);
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+}
+
+.dshTerminalNumber {
+  flex: 0 0 88px;
+}
+
+.dshTerminalHint {
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 4px 0 0 106px;
+}
+
+/* A hint that spans the form rather than sitting under one field's label. */
+.dshTerminalHintWide {
+  padding-left: 0;
+  padding-top: 8px;
+}
+
+.dshTerminalHintWide code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.dshTerminalGroupHeading {
+  color: var(--dsw-alias-label-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  padding-top: 14px;
+}
+
+.dshTerminalSwatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px 14px;
+  padding-top: 8px;
+}
+
+.dshTerminalSwatch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 13px;
+}
+
+.dshTerminalSwatch > label {
+  flex: 1;
+  min-width: 0;
+}
+
+.dshTerminalSwatch input[type='color'] {
+  width: 34px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* The colour code, editable: typing or pasting one beats picking it. */
+.dshTerminalHex {
+  flex: none;
+  width: 84px;
+  padding: 3px 6px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 6px;
+  background: var(--dsw-alias-bg-layer-3);
+  color: var(--dsw-alias-label-secondary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.dshTerminalHex:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 1px;
+}
+
+/* Live sample of the staged palette: white background included. */
+.dshTerminalPreview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.dshTerminalPreviewLabel {
+  opacity: 0.55;
+}
+
+.dshTerminalFooter {
+  border-top: 0.5px solid var(--dsw-alias-border-l2);
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0 4px;
+  display: flex;
+}
+
+.dshTerminalStatus {
+  min-width: 0;
+  color: var(--dsw-alias-label-tertiary);
+  flex: 1;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.dshTerminalFailed {
+  min-width: 0;
+  color: var(--dsw-alias-label-error);
+  flex: 1;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* The staged-edit marker in the header, beside the chevron. */
+.dshTerminalPending {
+  flex: none;
+}
+
+/* 放弃 / 恢复默认: the quiet, bordered action. */
+.dshTerminalDiscard {
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  padding: 5px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--dsw-alias-label-secondary);
+  background: 0 0;
+}
+
+.dshTerminalDiscard:hover:not(:disabled) {
+  color: var(--dsw-alias-label-primary);
+  border-color: var(--dsw-alias-label-dimmed);
+}
+
+.dshTerminalDiscard:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* 保存: the inverted fill the page's own cards use for their primary action. */
+.dshTerminalSave {
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 5px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  background: var(--dsw-alias-label-primary);
+  color: var(--dsw-alias-bg-layer-3);
+}
+
+.dshTerminalSave:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.dshTerminalDiscard:focus-visible,
+.dshTerminalSave:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 1px;
+}

@@ -1,0 +1,24 @@
+# dsh-terminal-tab bundle patch
+#
+# This is the `dsh.bundle.patch` layer of the package. Installing it through the
+# official CLI —
+#
+#   dsh plugin --profile <name> add ./dsh-terminal-tab
+#
+# — makes `dsh plugin` append `dsh-terminal-tab` to `dsh.profile.bundles`, and
+# the profile boot merges this patch: one `insert` of the plugin row. The row
+# mounts both halves of the plugin (the Node half below, and the browser half
+# that the package's `dsh.client` declaration puts in the web module graph).
+#
+# Optional configuration lives on this row. Every key is optional; the defaults
+# are documented in README.md.
+#
+#   - insert:
+#       - id: terminal-tab
+#         name: 'dsh-terminal-tab'
+#         config:
+#           command: nvim
+#
+- insert:
+    - id: terminal-tab
+      name: 'dsh-terminal-tab'

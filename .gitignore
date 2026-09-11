@@ -1,0 +1,14 @@
+# Installed dependencies and local tooling state.
+node_modules/
+
+# Build output. The `prepare` script rebuilds it, so a checkout or a git install
+# produces it from src/ rather than carrying a stale copy in history.
+lib/
+
+# Local caches and packing residue.
+.npm-cache/
+*.tgz
+
+# Logs.
+*.log
+npm-debug.log*
